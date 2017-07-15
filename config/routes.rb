@@ -46,7 +46,19 @@ Rails.application.routes.draw do
   #   end
   #   resources :posts, concerns: :toggleable
   #   resources :photos, concerns: :toggleable
-  resources :applicant, :controller => 'application_controller', :only => [:index]
+  resources :applicant, :controller => 'application', :only => [:index]
+  
+  resources :entries, :controller => 'application', :only => [] do
+    collection do
+      put 'add_entry'
+      delete 'destroy'
+    end
+  end
+  resources :path, :controller => 'application', :only => [] do
+    collection do
+      get 'path'
+    end
+  end
   # Example resource route within a namespace:
   #   namespace :admin do
   #     # Directs /admin/products/* to Admin::ProductsController

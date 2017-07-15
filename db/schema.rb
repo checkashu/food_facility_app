@@ -11,14 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715153129) do
-
-  create_table "applications", force: :cascade do |t|
-    t.string   "address"
-    t.string   "applicant"
-    t.datetime "expirationdate"
-    t.string   "locationdescription"
-    t.boolean  "status"
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end

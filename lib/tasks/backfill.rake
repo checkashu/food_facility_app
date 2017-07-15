@@ -1,26 +1,21 @@
+require 'set'
 namespace :backfill do
     desc 'Backfilling data with data at https://data.sfgov.org/resource/rqzj-sfat.json'
-    task :my_task1 => :environment do
+    task :backfill_dataset => :environment do
         request = Typhoeus::Request.new("https://data.sfgov.org/resource/rqzj-sfat.json",method: :get)
-        #debugger
         json_response = JSON.parse(request.run.response_body)
-        raise 'Service didnt response' if json_response.key?('error')
-        
+        raise 'Service didnt response' unless json_response.is_a?(Array)
+        #st = Set.new
         json_response.each do |response|
-            puts response
+            #st.add(response['objectid'])
             app = Application.new(process_response(response))
-            #debugger
-            puts app.status
-            puts app.applicant
-            puts app.expirationdate
-            puts app.locationdescription
-            puts app.address
+            puts st.size
             app.save
         end
     end
     def process_response(response)
         response.except!("cnn", "priorpermit", "latitude", "blocklot", "received", "lot", "schedule", "dayshours", "approved", "permit",\
-        "x", "y", "block", "location", "facilitytype", "objectid", "fooditems", "status", "longitude", "noisent")
+        "x", "y", "block", "location", "facilitytype", "fooditems", "longitude", "noisent")
     end
     
 end

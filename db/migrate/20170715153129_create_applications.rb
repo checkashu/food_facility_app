@@ -5,7 +5,7 @@ class CreateApplications < ActiveRecord::Migration
       t.string :applicant
       t.datetime :expirationdate
       t.string :locationdescription
-      t.boolean :status
+      t.string :status
     end
   end
 end
