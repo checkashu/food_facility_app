@@ -2,7 +2,7 @@ class Application < ActiveRecord::Base
 
     attr_reader :address, :applicant, :locationdescription, :expirationdate, :status, :objectid
     
-    
+    self.primary_key = 'objectid'
     def initialize(options = {})
             super(options)
             #@address = options["address"] if options["address"]

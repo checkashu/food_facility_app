@@ -26,3 +26,5 @@ en:
   no_street: "No street name provided!"
   entry_made: "A entry was created in dataset."
   entry_deleted: "Entry was deleted from dataset."
+  no_object_id: "There is no valid obect id."
+  something_wrong: "Something went wrong."

@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       get 'path'
     end
   end
+ 
   # Example resource route within a namespace:
   #   namespace :admin do
   #     # Directs /admin/products/* to Admin::ProductsController
