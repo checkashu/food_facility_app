@@ -6,7 +6,13 @@ class ApplicationController < ActionController::Base
   
   def index
     #show applicants' info, takes a parameter 'name'
-    presenter_response = get_applicant_details(params['name'])
+    if params['check_expiration'] == true
+      presenter_response = get_expired_permits(params['date'])
+    elsif params['street_name_search'] == true
+      presenter_response = get_applicant_by_street_name(params['street_name'])
+    else
+      presenter_response = get_applicant_by_name(params['name'])
+    end  
     render_success(presenter_response)
   end
   
@@ -16,12 +22,36 @@ class ApplicationController < ActionController::Base
   end
   
   private
-  def get_applicant_details(name_substring)
-    ApplicationPresenter.index(name_substring)
+  
+  def get_applicant_by_street_name(street_name)
+    render_failure({:error => I18n.t 'no_name'}) if street_name.nil?
+    ApplicationPresenter.present_applicants_by_street_name(street_name)
+  end
+  
+  def get_expired_permits(date)
+    validate_date(date)
+    time = Time.parse(date)
+    ApplicationPresenter.present_expired(time)
+  end
+  
+  def validate_date(date)
+    begin
+      Date.parse(date)
+    rescue ArgumentError
+      render_failure({:error => I18n.t 'incorrect_date'})
+    end
+  end
     
+  def get_applicant_by_name(name_substring)
+    render_failure({:error => I18n.t 'no_name'}) if name_substring.nil?
+    ApplicationPresenter.present_applicants_by_name(name_substring)
   end
   
   def render_success(response)
     render :json => {:http_code => 200, :status => :ok, :response => response}
+  end
+  
+  def render_failure(failure_response = {}, status = 400)
+    render :json => {:status => :error, :http_code => status}.merge(failure_response)
   end
 end

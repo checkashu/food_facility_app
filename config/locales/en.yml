@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  incorrect_date: "Date given is in incorrect format."
+  no_name: "No name provided."
+  no_street: "No street name provided!"

@@ -6,6 +6,7 @@ class CreateApplications < ActiveRecord::Migration
       t.datetime :expirationdate
       t.string :locationdescription
       t.string :status
+      t.integer :objectid
     end
   end
 end

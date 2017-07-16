@@ -1,7 +1,15 @@
 class ApplicationPresenter
     class << self    
-        def index(name_substring)
+        def present_applicants_by_name(name_substring)
             applications = Application.where("applicant like ? ",  "%#{name_substring}%")
+            applications.map {|application| present_application(application) }
+        end
+        def present_applicants_by_street_name(street)
+            applications = Application.where("address like ? ",  "%#{name_substring}%")
+            applications.map {|application| present_application(application) }
+        end
+        def present_expired(date)
+            applications = Application.where("expirationdate > ? OR expirationdate IS NULL", date)
             applications.map {|application| present_application(application) }
         end
         private
