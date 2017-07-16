@@ -12,7 +12,16 @@ class ApplicationPresenter
             applications = Application.where("expirationdate > ? OR expirationdate IS NULL", date)
             applications.map {|application| present_application(application) }
         end
+        def add_entry(params)
+            application = Application.new(params)
+            application.save
+        end
+        def delete_entry(params)
+            application = Application.new(params)
+            application.destroy
+        end
         private
+
         def present_application(application)
             {
                 :application_status => application[:status],

@@ -15,12 +15,17 @@ class ApplicationController < ActionController::Base
     end  
     render_success(presenter_response)
   end
-  
-  def show
-    #takes day month and year as parameter and prints all users whose permits has expired as parameter
-    
+
+  def add_entry
+    ApplicationPresenter.add_entry(params)
+    render_success(I18n.t 'entry_made')
   end
-  
+
+  def destroy
+    ApplicationPresenter.delete_entry(params)
+    render_success(I18n.t 'entry_deleted')
+  end
+
   private
   
   def get_applicant_by_street_name(street_name)
